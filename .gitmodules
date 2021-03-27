@@ -1,0 +1,4 @@
+[submodule "EqModels"]
+	path = EqModels
+	url = C:/Projects/EqModels
+	branch = master
