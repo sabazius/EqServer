@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EqServer", "EqServer\EqServer.csproj", "{B1D91E01-EAD6-4412-9927-3CDC5400A7F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1D91E01-EAD6-4412-9927-3CDC5400A7F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1D91E01-EAD6-4412-9927-3CDC5400A7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1D91E01-EAD6-4412-9927-3CDC5400A7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1D91E01-EAD6-4412-9927-3CDC5400A7F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96A71659-02D4-4E6C-B4E8-640AAA4B7496}
+	EndGlobalSection
+EndGlobal
