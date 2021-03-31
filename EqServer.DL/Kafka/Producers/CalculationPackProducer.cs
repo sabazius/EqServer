@@ -1,11 +1,8 @@
 ﻿using Confluent.Kafka;
 using EqModels.Models;
-using MessagePack;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MsgPack.Serialization;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +11,7 @@ namespace EqServer.DL.Kafka.Producers
     public class CalculationPackProducer : IHostedService
     {
         private readonly ILogger<CalculationPackProducer> _logger;
-        private readonly IProducer<int, Equation> _producer;
+        private readonly IProducer<int, CalculationPackProducer> _producer;
 
         public CalculationPackProducer(ILogger<CalculationPackProducer> logger)
         {
@@ -24,11 +21,22 @@ namespace EqServer.DL.Kafka.Producers
             {
                 BootstrapServers = "localhost:9092"
             };
+
+            _producer = new ProducerBuilder<int, CalculationPackProducer>(config).Build();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+
+            var msg = new Message<int, CalculationPackProducer>() 
+            {
+                
+            };
+
+
+
+
+            _producer.ProduceAsync("testtopic")
 
         }
 
