@@ -1,8 +1,7 @@
 ﻿using Confluent.Kafka;
-using EqModels.Models;
+using EqServer.EqModels.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +10,7 @@ namespace EqServer.DL.Kafka.Producers
     public class CalculationPackProducer : IHostedService
     {
         private readonly ILogger<CalculationPackProducer> _logger;
-        private readonly IProducer<int, CalculationPackProducer> _producer;
+        private readonly IProducer<int, Equation> _producer;
 
         public CalculationPackProducer(ILogger<CalculationPackProducer> logger)
         {
@@ -22,29 +21,31 @@ namespace EqServer.DL.Kafka.Producers
                 BootstrapServers = "localhost:9092"
             };
 
-            _producer = new ProducerBuilder<int, CalculationPackProducer>(config).Build();
+            _producer = new ProducerBuilder<int, Equation>(config)
+                .SetValueSerializer(new MsgPackSerializer<Equation>())
+                .Build();
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
 
-            var msg = new Message<int, CalculationPackProducer>() 
+            var msg = new Message<int, Equation>() 
             {
-                
+              Key = 1,
+              Value = new Equation
+              {
+                Id = 1,
+                EqMethod = "ax + b = c"
+              }
             };
 
-
-
-
-            _producer.ProduceAsync("testtopic")
-
+            await _producer.ProduceAsync("data", msg);
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            _producer.Dispose();
+            return Task.CompletedTask;
         }
     }
-
-    
 }

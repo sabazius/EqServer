@@ -1,6 +1,4 @@
-using EqModels.Models;
 using FluentValidation.AspNetCore;
-using MessagePack;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

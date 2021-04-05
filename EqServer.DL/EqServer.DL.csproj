@@ -5,18 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Kafka\Producers\CalculationPackProducer.cs~RF7078d0f.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Kafka\Consumers\" />
     <Folder Include="Mongo\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Confluent.Kafka" Version="1.6.3" />
+    <PackageReference Include="MessagePack" Version="2.2.85" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\EqModels\EqModels\EqModels.csproj" />
+    <ProjectReference Include="..\EqModels\EqModels.csproj" />
   </ItemGroup>
 
 </Project>

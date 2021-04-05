@@ -1,5 +1,7 @@
+using EqServer.DL.Kafka.Producers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -21,6 +23,9 @@ namespace EqServer
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                }).ConfigureServices( (context, collection) => 
+                {
+                    collection.AddHostedService<CalculationPackProducer>();
                 });
     }
 }
