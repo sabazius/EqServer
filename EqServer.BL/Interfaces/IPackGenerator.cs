@@ -1,10 +1,11 @@
 ﻿using EqServer.EqModels.Models;
+using System.Threading.Tasks;
 
 namespace EqServer.BL.Interfaces
 {
     public interface IPackGenerator
     {
-        int GeneratePack(int numOfCalcs);
+        Task<int> GeneratePacks(int numOfCalcs);
 
         CalculationUnit GenerateCalcUnit();
     }

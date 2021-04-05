@@ -1,16 +1,19 @@
 ﻿using EqServer.BL.Interfaces;
+using EqServer.DL.Kafka.Producers;
 using EqServer.EqModels.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EqServer.BL.Generator
 {
     public class PackGenerator : IPackGenerator
     {
+        ICalculationPackProducer _calculationPackProducer;
 
-        public PackGenerator()
+        public PackGenerator(ICalculationPackProducer calculationPackProducer)
         {
-
+            _calculationPackProducer = calculationPackProducer;
         }
 
         public CalculationUnit GenerateCalcUnit()
@@ -18,8 +21,10 @@ namespace EqServer.BL.Generator
             throw new NotImplementedException();
         }
 
-        public int GeneratePack(int numOfCalcs)
+        public async Task<int> GeneratePacks(int numOfCalcs)
         {
+            var result = new List<CalculationPack>();
+
             for (int i = 0; i < numOfCalcs; i++)
             {
                 var pack = new CalculationPack()
@@ -27,10 +32,18 @@ namespace EqServer.BL.Generator
                     Id = i,
                     Count = numOfCalcs,
                     EqId = 1,
-                    Data = GenerateUnits(50, 10, null)
+                    Data = GenerateUnits(50, 10, new Equation
+                    {
+                        Id = i + 3,
+                        EqMethod = "ax + b = c"
+                    })
                 };
+                result.Add(pack);
             }
-            return 0;
+
+            await _calculationPackProducer.GeneratePacks(result);
+
+            return numOfCalcs;
         }
 
         private List<CalculationUnit> GenerateUnits(int numOfUnits, int calcPackId, Equation eq)

@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EqServer.BL\EqServer.BL.csproj" />
     <ProjectReference Include="..\EqServer.DL\EqServer.DL.csproj" />
   </ItemGroup>
 

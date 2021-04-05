@@ -25,7 +25,7 @@ namespace EqServer
                     webBuilder.UseStartup<Startup>();
                 }).ConfigureServices( (context, collection) => 
                 {
-                    collection.AddHostedService<CalculationPackProducer>();
+                    //collection.AddHostedService<CalculationPackProducer>();
                 });
     }
 }

@@ -1,16 +1,15 @@
 ﻿using Confluent.Kafka;
 using EqServer.EqModels.Models;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Threading;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EqServer.DL.Kafka.Producers
 {
-    public class CalculationPackProducer : IHostedService
+    public class CalculationPackProducer : ICalculationPackProducer
     {
         private readonly ILogger<CalculationPackProducer> _logger;
-        private readonly IProducer<int, Equation> _producer;
+        private readonly IProducer<int, CalculationPack> _producer;
 
         public CalculationPackProducer(ILogger<CalculationPackProducer> logger)
         {
@@ -21,31 +20,23 @@ namespace EqServer.DL.Kafka.Producers
                 BootstrapServers = "localhost:9092"
             };
 
-            _producer = new ProducerBuilder<int, Equation>(config)
-                .SetValueSerializer(new MsgPackSerializer<Equation>())
+            _producer = new ProducerBuilder<int, CalculationPack>(config)
+                .SetValueSerializer(new MsgPackSerializer<CalculationPack>())
                 .Build();
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public async Task GeneratePacks(List<CalculationPack> data)
         {
-
-            var msg = new Message<int, Equation>() 
+            foreach (var item in data)
             {
-              Key = 1,
-              Value = new Equation
-              {
-                Id = 1,
-                EqMethod = "ax + b = c"
-              }
-            };
+                var msg = new Message<int, CalculationPack>()
+                {
+                    Key = item.Id,
+                    Value = item
+                };
 
-            await _producer.ProduceAsync("data", msg);
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            _producer.Dispose();
-            return Task.CompletedTask;
+                await _producer.ProduceAsync("data", msg);
+            }
         }
     }
 }
