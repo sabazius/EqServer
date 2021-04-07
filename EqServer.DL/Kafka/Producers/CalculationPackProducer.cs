@@ -23,6 +23,8 @@ namespace EqServer.DL.Kafka.Producers
             _producer = new ProducerBuilder<int, CalculationPack>(config)
                 .SetValueSerializer(new MsgPackSerializer<CalculationPack>())
                 .Build();
+
+
         }
 
         public async Task GeneratePacks(List<CalculationPack> data)

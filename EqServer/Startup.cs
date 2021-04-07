@@ -1,5 +1,6 @@
 using EqServer.BL.Generator;
 using EqServer.BL.Interfaces;
+using EqServer.DL.Kafka;
 using EqServer.DL.Kafka.Producers;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +26,7 @@ namespace EqServer
             services.AddSwaggerGen();
 
             services.AddSingleton<IPackGenerator, PackGenerator>();
+            services.AddSingleton<KafkaAdmin>();
             services.AddSingleton<ICalculationPackProducer, CalculationPackProducer>();
 
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());

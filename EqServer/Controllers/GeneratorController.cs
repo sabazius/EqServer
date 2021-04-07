@@ -1,6 +1,7 @@
 ﻿using EqServer.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace EqServer.Controllers
 {
@@ -18,7 +19,7 @@ namespace EqServer.Controllers
             _packGenerator = packGenerator;
         }
 
-        [HttpPost]
+        [HttpPost(nameof(CreateCalculationPacks))]
         public IActionResult CreateCalculationPacks(int numOfPacks, int numOfUnits)
         {
             if (numOfPacks <= 0)
@@ -30,5 +31,21 @@ namespace EqServer.Controllers
 
             return Ok(numOfPacks);
         }
+
+        [HttpPost(nameof(DeleteCalculationTopic))]
+        public async Task<IActionResult> DeleteCalculationTopic()
+        {
+            var result = await _packGenerator.DeleteCalcTopic();
+
+            if (result)
+            {
+                return Ok(result);
+            } else
+            {
+                return NotFound(result);
+            }
+
+        }
+
     }
 }
