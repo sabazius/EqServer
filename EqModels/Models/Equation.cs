@@ -10,5 +10,8 @@ namespace EqServer.EqModels.Models
 
         [Key(1)]
         public string EqMethod { get; set; }
+
+        [Key(2)]
+        public int Result { get; set; }
     }
 }

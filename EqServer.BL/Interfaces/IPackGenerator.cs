@@ -5,8 +5,6 @@ namespace EqServer.BL.Interfaces
 {
     public interface IPackGenerator
     {
-        Task<int> GeneratePacks(int numOfCalcs);
-
-        CalculationUnit GenerateCalcUnit();
+        Task<int> GeneratePacks(int numOfCalcs, int numOfUnits);
     }
 }

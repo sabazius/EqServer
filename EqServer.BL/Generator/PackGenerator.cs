@@ -16,26 +16,24 @@ namespace EqServer.BL.Generator
             _calculationPackProducer = calculationPackProducer;
         }
 
-        public CalculationUnit GenerateCalcUnit()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<int> GeneratePacks(int numOfCalcs)
+        public async Task<int> GeneratePacks(int numOfCalcs, int numOfUnits)
         {
             var result = new List<CalculationPack>();
 
             for (int i = 0; i < numOfCalcs; i++)
             {
+                Random rand = new Random(i);
+                var id = rand.Next();
+
                 var pack = new CalculationPack()
                 {
-                    Id = i,
+                    Id = id,
                     Count = numOfCalcs,
                     EqId = 1,
-                    Data = GenerateUnits(50, 10, new Equation
+                    Data = GenerateUnits(numOfUnits, id, new Equation
                     {
                         Id = i + 3,
-                        EqMethod = "ax + b = c"
+                        EqMethod = rand.Next(0, 2345).ToString() + rand.Next(123, 567).ToString() + "+" + rand.Next(0, 10000).ToString() //"ax + b = c"
                     })
                 };
                 result.Add(pack);

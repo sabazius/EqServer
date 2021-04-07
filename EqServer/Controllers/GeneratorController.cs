@@ -19,14 +19,14 @@ namespace EqServer.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCalculationPacks(int numOfPacks)
+        public IActionResult CreateCalculationPacks(int numOfPacks, int numOfUnits)
         {
             if (numOfPacks <= 0)
             {
                 return BadRequest(numOfPacks);
             }
 
-            _packGenerator.GeneratePacks(numOfPacks);
+            _packGenerator.GeneratePacks(numOfPacks, numOfUnits);
 
             return Ok(numOfPacks);
         }
