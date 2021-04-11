@@ -1,8 +1,6 @@
 ﻿using Confluent.Kafka;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EqServer.DL.Kafka
@@ -26,11 +24,11 @@ namespace EqServer.DL.Kafka
         }
 
 
-        public async Task<bool> DeleteCalcTopic()
+        public async Task<bool> DeleteCalcTopic(string topicName)
         {
             var topics = new List<string>();
 
-            topics.Add("xxx");
+            topics.Add(topicName);
 
             await _adminClient.DeleteTopicsAsync(topics.AsEnumerable());
 

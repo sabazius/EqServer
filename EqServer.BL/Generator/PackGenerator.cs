@@ -19,9 +19,9 @@ namespace EqServer.BL.Generator
             _kafkaAdmin = kafkaAdmin;
         }
 
-        public async Task<bool> DeleteCalcTopic()
+        public async Task<bool> DeleteCalcTopic(string topicName)
         {
-            return await _kafkaAdmin.DeleteCalcTopic();
+            return await _kafkaAdmin.DeleteCalcTopic(topicName);
         }
 
         public async Task<int> GeneratePacks(int numOfCalcs, int numOfUnits)

@@ -33,17 +33,16 @@ namespace EqServer.Controllers
         }
 
         [HttpPost(nameof(DeleteCalculationTopic))]
-        public async Task<IActionResult> DeleteCalculationTopic()
+        public async Task<IActionResult> DeleteCalculationTopic(string topicName)
         {
-            var result = await _packGenerator.DeleteCalcTopic();
+            var result = await _packGenerator.DeleteCalcTopic(topicName);
 
             if (result)
             {
                 return Ok(result);
-            } else
-            {
-                return NotFound(result);
             }
+
+            return NotFound(result);
 
         }
 

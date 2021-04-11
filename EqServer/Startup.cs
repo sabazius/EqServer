@@ -1,3 +1,4 @@
+using System;
 using EqServer.BL.Generator;
 using EqServer.BL.Interfaces;
 using EqServer.DL.Kafka;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EqServer
 {
