@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.Linq;
+using EqModels.Models;
 
 namespace EqServer
 {
@@ -27,6 +28,10 @@ namespace EqServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen();
+
+            services.Configure<MongoDbConfiguration>(Configuration.GetSection(nameof(MongoDbConfiguration)));
+
+            var mongoSettings = Configuration.GetSection(nameof(MongoDbConfiguration)).Get<MongoDbConfiguration>();
 
             services.AddSingleton<IPackGenerator, PackGenerator>();
             services.AddSingleton<KafkaAdmin>();
