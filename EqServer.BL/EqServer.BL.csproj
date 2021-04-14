@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.Identity.MongoDbCore" Version="3.1.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.12.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EqModels\EqModels.csproj" />
     <ProjectReference Include="..\EqServer.DL\EqServer.DL.csproj" />
   </ItemGroup>
