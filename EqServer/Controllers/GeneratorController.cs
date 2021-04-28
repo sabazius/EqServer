@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using EqServer.EqModels.Models;
 
 namespace EqServer.Controllers
 {
@@ -12,11 +13,13 @@ namespace EqServer.Controllers
 
         private readonly ILogger<GeneratorController> _logger;
         private readonly IPackGenerator _packGenerator;
+        private readonly ICalculationPackService _calculationPackService;
 
-        public GeneratorController(ILogger<GeneratorController> logger, IPackGenerator packGenerator)
+        public GeneratorController(ILogger<GeneratorController> logger, IPackGenerator packGenerator, ICalculationPackService calculationPackService)
         {
             _logger = logger;
             _packGenerator = packGenerator;
+            _calculationPackService = calculationPackService;
         }
 
         [HttpPost(nameof(CreateCalculationPacks))]
@@ -43,8 +46,35 @@ namespace EqServer.Controllers
             }
 
             return NotFound(result);
-
         }
+
+        [HttpPost(nameof(CreateSinglePack))]
+        public async Task<IActionResult> CreateSinglePack(CalculationPack calc)
+        {
+            var result = await _calculationPackService.Create(calc);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet(nameof(GetCalcPack))]
+        public async Task<IActionResult> GetCalcPack(int id)
+        {
+            var result = await _calculationPackService.GetById(id);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return NotFound();
+        }
+
+
 
     }
 }
