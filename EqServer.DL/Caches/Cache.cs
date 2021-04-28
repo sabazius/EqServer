@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EqServer.EqModels.Models;
 using Microsoft.Extensions.Caching.Memory;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using MongoDB.Driver;
 
 namespace EqServer.DL.Caches
 {
-    public class Cache<TItem>
+    public class Cache<TKey, TItem>
     {
         private MemoryCache _cache = new MemoryCache(new MemoryCacheOptions());
 
-
-        public TItem GetOrAdd(object key, Func<TItem> create)
+        public TItem GetOrAdd(TKey key, Func<TItem> create)
         {
             TItem cacheItem;
 
@@ -23,18 +25,17 @@ namespace EqServer.DL.Caches
             return cacheItem;
         }
 
-        //private Dictionary<object, TItem> _cache = new Dictionary<object, TItem>();
+        private void Consume(CancellationToken token)
+        {
+            
+        }
 
-
-        //public TItem GetOrAdd(object key, Func<TItem> createItem)
-        //{
-        //    if (!_cache.ContainsKey(key))
-        //    {
-        //        _cache[key] = createItem();
-        //    }
-
-        //    return _cache[key];
-        //}
-
+        public void Init(Dictionary<TKey, TItem> initCache)
+        {
+            foreach (var item in initCache)
+            {
+                _cache.Set(item.Key, item.Value);
+            }
+        }
     }
 }

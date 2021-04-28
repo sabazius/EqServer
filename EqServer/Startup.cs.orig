@@ -1,19 +1,22 @@
-using EqModels.Models;
+using System;
 using EqServer.BL.Generator;
 using EqServer.BL.Interfaces;
-using EqServer.BL.Services;
-using EqServer.DL.Caches;
-using EqServer.DL.Interfaces;
 using EqServer.DL.Kafka;
 using EqServer.DL.Kafka.Producers;
-using EqServer.DL.Repositories;
-using EqServer.EqModels.Models;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
+using System.Linq;
+<<<<<<< Updated upstream
+using EqModels.Models;
+=======
+using EqServer.DL.Caches;
+using EqServer.EqModels.Models;
+>>>>>>> Stashed changes
 
 namespace EqServer
 {
@@ -29,9 +32,9 @@ namespace EqServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var testCache = new Cache<Equation>();
+            var testCache = new Cache<Equation>();
 
-            //var result = testCache.GetOrAdd(1, () => GetEquation());
+            var result = testCache.GetOrAdd(1, () => GetEquation());
 
             services.AddSwaggerGen();
 
@@ -42,9 +45,6 @@ namespace EqServer
             services.AddSingleton<IPackGenerator, PackGenerator>();
             services.AddSingleton<KafkaAdmin>();
             services.AddSingleton<ICalculationPackProducer, CalculationPackProducer>();
-
-            services.AddSingleton<ICalculationPackRepository, CalculationPackRepository>();
-            services.AddSingleton<ICalculationPackService, CalculationPackService>();
 
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddAutoMapper(typeof(Startup));

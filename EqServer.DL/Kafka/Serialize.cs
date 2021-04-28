@@ -1,8 +1,5 @@
 ﻿using Confluent.Kafka;
 using MessagePack;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EqServer.DL.Kafka
 {
