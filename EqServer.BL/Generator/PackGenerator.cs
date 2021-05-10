@@ -62,7 +62,8 @@ namespace EqServer.BL.Generator
                     Equation = new Equation
                     {
                         Id = i,
-                        EqMethod = rand.Next(0, 2345).ToString() + "*" + rand.Next(123, 567).ToString() + "+" + rand.Next(0, 10000).ToString(),
+                        EqMethod = "a*x+b",//rand.Next(0, 2345).ToString() + "*" + rand.Next(123, 567).ToString() + "+" + rand.Next(0, 10000).ToString(),
+                        Values = new List<int>() { rand.Next(0, 2345), rand.Next(123, 567), rand.Next(0, 10000) },
                         Result = -1
                     }
 
