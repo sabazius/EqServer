@@ -30,7 +30,7 @@ namespace EqServer.BL.Generator
 
             for (int i = 0; i < numOfCalcs; i++)
             {
-                Random rand = new Random(i);
+                Random rand = new Random();
                 var id = rand.Next();
 
                 var pack = new CalculationPack()
