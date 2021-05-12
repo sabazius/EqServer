@@ -2,7 +2,7 @@ using EqModels.Models;
 using EqServer.BL.Generator;
 using EqServer.BL.Interfaces;
 using EqServer.BL.Services;
-using EqServer.DL.Caches;
+using EqServer.DataLayer.Kafka;
 using EqServer.DL.Interfaces;
 using EqServer.DL.Kafka;
 using EqServer.DL.Kafka.Producers;
@@ -29,9 +29,6 @@ namespace EqServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var testCache = new Cache<Equation>();
-
-            //var result = testCache.GetOrAdd(1, () => GetEquation());
 
             services.AddSwaggerGen();
 
@@ -48,6 +45,8 @@ namespace EqServer
 
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddHostedService<ResultConsumer>();
         }
 
         private Equation GetEquation()
