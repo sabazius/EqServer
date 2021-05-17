@@ -3,6 +3,7 @@ using EqServer.BL.Generator;
 using EqServer.BL.Interfaces;
 using EqServer.BL.Services;
 using EqServer.DataLayer.Kafka;
+using EqServer.DL.DataFlow;
 using EqServer.DL.Interfaces;
 using EqServer.DL.Kafka;
 using EqServer.DL.Kafka.Producers;
@@ -41,6 +42,7 @@ namespace EqServer
             services.AddSingleton<KafkaAdmin>();
             services.AddSingleton<ICalculationPackProducer, CalculationPackProducer>();
             services.AddSingleton<IResultsRepository, ResultsRepository>();
+            services.AddSingleton<IResultConsumerDataFlow, ResultConsumerDataFlow>();
 
             services.AddSingleton<ICalculationPackRepository, CalculationPackRepository>();
             services.AddSingleton<ICalculationPackService, CalculationPackService>();

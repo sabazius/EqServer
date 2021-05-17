@@ -7,20 +7,22 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using EqServer.DL.DataFlow;
 using EqServer.DL.Mongo;
 
 namespace EqServer.DataLayer.Kafka
 {
     public class ResultConsumer : BackgroundService
     {
-
+        private readonly IResultConsumerDataFlow _consumerDataFlow;
         private readonly ILogger<ResultConsumer> _logger;
         private readonly ConsumerConfig _kafkaConfig;
         private readonly IResultsRepository _resultsRepository;
-        public ResultConsumer(ILogger<ResultConsumer> logger, IResultsRepository resultsRepository)
+        public ResultConsumer(ILogger<ResultConsumer> logger, IResultsRepository resultsRepository, IResultConsumerDataFlow consumerDataFlow)
         {
             _logger = logger;
             _resultsRepository = resultsRepository;
+            _consumerDataFlow = consumerDataFlow;
 
             _kafkaConfig = new ConsumerConfig
             {
@@ -52,12 +54,13 @@ namespace EqServer.DataLayer.Kafka
 
                             try
                             {
+                                _consumerDataFlow.ProcessMessage(consumeResult.Message.Value);
                                 //_calculationDataFlow.ProcessMessage(consumeResult.Message.Value);
                                 
-                                var deserializedMessage = MessagePackSerializer.Deserialize<CalculationPack>(consumeResult.Message.Value);
-                                ResultData._result.Enqueue(deserializedMessage);
+                                //var deserializedMessage = MessagePackSerializer.Deserialize<CalculationPack>(consumeResult.Message.Value);
+                                //ResultData._result.Enqueue(deserializedMessage);
 
-                                _resultsRepository.Save(deserializedMessage);
+                                //_resultsRepository.Save(deserializedMessage);
 
                                 _logger.LogInformation(consumeResult.Message.Key.ToString());
                             }
