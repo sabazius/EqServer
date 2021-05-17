@@ -53,6 +53,7 @@ namespace EqServer.DataLayer.Kafka
                             try
                             {
                                 //_calculationDataFlow.ProcessMessage(consumeResult.Message.Value);
+                                
                                 var deserializedMessage = MessagePackSerializer.Deserialize<CalculationPack>(consumeResult.Message.Value);
                                 ResultData._result.Enqueue(deserializedMessage);
 

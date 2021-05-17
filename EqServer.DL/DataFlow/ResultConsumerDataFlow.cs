@@ -14,7 +14,7 @@ namespace EqServer.DL.DataFlow
     {
         private readonly ILogger<ResultConsumerDataFlow> _logger;
 
-        private TransformBlock<byte[], ResultConsumerDataFlow> _deserializeBlock;
+        private TransformBlock<byte[], CalculationPack> _deserializeBlock;
         private TransformBlock<CalculationPack, CalculationPack> _enqueueBlock;
         private TransformBlock<CalculationPack, CalculationPack> _validatioBlock;
         private ActionBlock<CalculationPack> _publishBlock;
@@ -27,7 +27,7 @@ namespace EqServer.DL.DataFlow
 
             _resultReposutory = resultReposutory;
 
-            _deserializeBlock = new TransformBlock<byte[], ResultConsumerDataFlow>(msg => MessagePackSerializer.Deserialize<ResultConsumerDataFlow>(msg));
+            _deserializeBlock = new TransformBlock<byte[], CalculationPack>(msg => MessagePackSerializer.Deserialize<CalculationPack>(msg));
 
             _enqueueBlock = new TransformBlock<CalculationPack, CalculationPack>(result =>
             {
@@ -52,13 +52,16 @@ namespace EqServer.DL.DataFlow
                 PropagateCompletion = true
             };
 
-            
+            _deserializeBlock.LinkTo(_enqueueBlock, linkOptions);
+            _enqueueBlock.LinkTo(_validatioBlock, linkOptions);
+            _validatioBlock.LinkTo(_publishBlock, linkOptions);
+
         }
 
 
-        public void ProcessMessage(byte[] msg)
+        public async void ProcessMessage(byte[] msg)
         {
-            throw new NotImplementedException();
+            await _deserializeBlock.SendAsync(msg);
         }
     }
 }
