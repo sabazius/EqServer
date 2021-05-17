@@ -6,6 +6,7 @@ using EqServer.DataLayer.Kafka;
 using EqServer.DL.Interfaces;
 using EqServer.DL.Kafka;
 using EqServer.DL.Kafka.Producers;
+using EqServer.DL.Mongo;
 using EqServer.DL.Repositories;
 using EqServer.EqModels.Models;
 using FluentValidation.AspNetCore;
@@ -39,6 +40,7 @@ namespace EqServer
             services.AddSingleton<IPackGenerator, PackGenerator>();
             services.AddSingleton<KafkaAdmin>();
             services.AddSingleton<ICalculationPackProducer, CalculationPackProducer>();
+            services.AddSingleton<IResultsRepository, ResultsRepository>();
 
             services.AddSingleton<ICalculationPackRepository, CalculationPackRepository>();
             services.AddSingleton<ICalculationPackService, CalculationPackService>();

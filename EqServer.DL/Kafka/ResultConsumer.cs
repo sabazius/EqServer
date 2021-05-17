@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using EqServer.DL.Mongo;
 
 namespace EqServer.DataLayer.Kafka
 {
@@ -15,10 +16,11 @@ namespace EqServer.DataLayer.Kafka
 
         private readonly ILogger<ResultConsumer> _logger;
         private readonly ConsumerConfig _kafkaConfig;
-
-        public ResultConsumer(ILogger<ResultConsumer> logger)
+        private readonly IResultsRepository _resultsRepository;
+        public ResultConsumer(ILogger<ResultConsumer> logger, IResultsRepository resultsRepository)
         {
             _logger = logger;
+            _resultsRepository = resultsRepository;
 
             _kafkaConfig = new ConsumerConfig
             {
@@ -53,6 +55,9 @@ namespace EqServer.DataLayer.Kafka
                                 //_calculationDataFlow.ProcessMessage(consumeResult.Message.Value);
                                 var deserializedMessage = MessagePackSerializer.Deserialize<CalculationPack>(consumeResult.Message.Value);
                                 ResultData._result.Enqueue(deserializedMessage);
+
+                                _resultsRepository.Save(deserializedMessage);
+
                                 _logger.LogInformation(consumeResult.Message.Key.ToString());
                             }
                             catch (Exception ex)
